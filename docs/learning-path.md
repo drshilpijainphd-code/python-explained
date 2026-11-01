@@ -1,42 +1,49 @@
-# A practical learning path
+# Working through the examples
 
 [Back to the repository](../README.md)
 
-## 1. Understand the building blocks
+Start with examples 01–05 if Python is new to you. Run each file, change an input, and work out why the result changed. The [fundamentals guide](fundamentals.md) is a reference for the syntax used along the way.
 
-Read [Python fundamentals](fundamentals.md), then run examples 01–05. Before running each program, predict its output. Change one input, rerun it, and explain why the output changed.
+If you already know variables, loops, and functions, start at example 06.
 
-**Checkpoint:** write a function that filters a list and returns a useful summary.
+## Change a boundary case
 
-## 2. Work with real data formats
+In the grade classifier, try 59, 60, 89, and 90. Then try -1 and 101. The distinction between an ordinary result and an invalid input matters: a failing grade is valid data, but a score outside the accepted range is an error.
 
-Study examples 06–10. Follow data from input through transformation to output. Notice where the examples assume a fixed schema and where they validate inputs.
+Read the corresponding test in [test_examples.py](../tests/test_examples.py). Add one more case before changing the implementation.
 
-**Checkpoint:** combine a CSV reader with a dataclass and calculate a summary without mixing calculation and printing.
+## Follow a record through a program
 
-## 3. Build useful tools
+Use the CSV sales example to trace how one row becomes a total:
 
-Run examples 11–14. Try the command-line tool's `--help` option. Explain why async waiting differs from speeding up a CPU-heavy calculation.
+1. `csv.DictReader` reads the fields as strings.
+2. The quantity becomes an integer and the unit price becomes a `Decimal`.
+3. The amount is added to the running total for that product.
+4. The result is formatted for display.
 
-**Checkpoint:** create a CLI that reads a local CSV and prints descriptive statistics, including helpful errors for invalid input.
+Add a second row for Notebook. Check that the amounts are added together instead of one row replacing the other. Next, try a missing quantity and decide what error message would help someone using the script.
 
-## 4. Explore modeling carefully
+## Join two examples
 
-Run example 15, change the synthetic data, and compare predictions. Discuss why training fit alone is not a measure of model quality.
+The examples are separate files, but a small application usually combines these ideas. A useful next step is a command-line CSV report:
 
-**Checkpoint:** split a larger dataset into training and test sets before judging prediction accuracy.
+- Accept an input path with `argparse`.
+- Read the file using UTF-8.
+- Calculate totals using the function from example 07.
+- Print a clear error if the file is missing or a required column is absent.
 
-## 5. Extend the repository
+Keep file reading outside the calculation function. That lets a test pass a short CSV string without creating a file.
 
-Pick one focused project:
+## Look at the assumptions
 
-- A personal reading tracker with SQLite storage.
-- A CSV quality checker that reports missing fields.
-- A report generator with a command-line interface.
-- A text-analysis utility that handles more than one language.
+The word counter recognizes ASCII letters only. The HTML parser handles the small examples shown, but is not a full web crawler. The async example uses simulated waits rather than real requests.
 
-Define the input, output, and error cases first. Implement a small version, write tests for the behavior, then improve its documentation.
+Pick one of these limits and extend the program. For example, change the tokenizer to handle a particular language, or add a test for a link whose label contains nested tags.
 
-## Before sharing a project
+In the regression example, changing the four synthetic scores makes the fitted line change. Compare the predicted and actual values, but do not treat a good fit on those same points as evidence of future accuracy.
 
-Run all examples and tests. Make sure setup instructions work from a fresh clone. Describe limitations honestly and use sample data that can be shared publicly.
+## Build something small
+
+A reading tracker is a reasonable follow-up project. Store book titles and completion status in SQLite, then add commands to create, list, and finish an entry. That combines functions, arguments, queries, and persistence without requiring a web framework.
+
+Write down what each command should do before implementing it. Include cases such as a missing book, an empty title, and an empty database. Once those behaviors work, add a README with commands someone else can copy.
