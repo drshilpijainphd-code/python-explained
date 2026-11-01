@@ -46,7 +46,24 @@ Python is not the right tool for every job. Browser interfaces normally use Java
 
 ### Windows: Command Prompt (CMD)
 
-Open **Command Prompt** from the Windows Start menu, or enter `cmd` in File Explorer's address bar while viewing your projects folder. Check the prerequisites, then clone the repository:
+Open **Command Prompt** from the Windows Start menu, or enter `cmd` in File Explorer's address bar while viewing your projects folder.
+
+If Python is not installed, install the official Python install manager:
+
+```bat
+winget install --id 9NQ7512CXL7T --exact --source msstore
+```
+
+Close CMD, open a new CMD window, and install the latest stable runtime using the manager's standard default:
+
+```bat
+pymanager install --update default
+pymanager exec --version
+```
+
+The [installation guide](docs/cmd.md#install-the-latest-stable-python-from-cmd) covers updates, existing installations, and missing WinGet. If you customized the manager's default version, that setting takes precedence.
+
+Once Python and Git are available, clone the repository:
 
 ```bat
 python --version
