@@ -2,55 +2,50 @@
 
 [Back to the repository](../README.md)
 
-Choose a language according to the problem, the team's experience, operational requirements, and the libraries available.
+A language is useful because of the work it helps you finish. The examples in this repository cover small parts of larger tasks: reading a file, summarizing records, querying a database, or accepting command-line arguments.
 
-| Application | What Python contributes | Ecosystem examples | Important tradeoff |
-| --- | --- | --- | --- |
-| Automation | File processing, reports, scheduled scripts | pathlib, csv, argparse | Validate inputs before changing real files |
-| Web backends | Routing, business logic, APIs | Django, Flask, FastAPI | Deployment also needs authentication, observability, and operations |
-| Data analysis | Cleaning, aggregation, visualization | pandas, NumPy, Matplotlib | Data quality determines whether results are useful |
-| Machine learning | Feature processing, training, inference | scikit-learn, PyTorch | Evaluate on unseen data and monitor model behavior |
-| Scientific computing | Numerical methods and experiments | NumPy, SciPy | Understand units, precision, and numerical assumptions |
-| Testing and tooling | Test suites, build scripts, developer utilities | unittest, pytest | Automation should produce reproducible results |
-| Desktop applications | Event-driven graphical interfaces | tkinter, PySide | Packaging and platform integration add work |
-| Education | Readable programs and interactive exercises | Python interpreter, Jupyter | Learn underlying concepts alongside library APIs |
+## Scripts and reports
 
-The linked projects below are examples of the ecosystem, not dependencies of this repository.
+Suppose a sales export contains hundreds of rows and several rows refer to the same product. A Python script can read the CSV, group the records, and produce totals. [Example 07](../examples/07_csv_sales_summary.py) implements that middle step.
 
-## How the examples connect to larger systems
+It uses `Decimal` constructed from strings so that values such as `0.10` can be represented exactly. This does not define an application's currency or rounding rules; those still need to be decided. A usable reporting tool would also check column names, missing quantities, and invalid prices.
 
-**Business reporting:** an exported CSV can become a summary that feeds a dashboard. Example 07 shows the aggregation step using exact decimal arithmetic. A complete application also checks headers, validates missing values, handles returns, and defines currency rules.
+For file automation, `pathlib` handles paths without embedding Windows or Unix separators throughout the code. [Example 06](../examples/06_file_report.py) writes to a temporary directory to keep the demonstration self-contained.
 
-**Web integrations:** a service often exchanges JSON. Example 08 demonstrates decoding and selecting records from a fixed payload. It makes no HTTP request. A live integration also needs timeouts, error handling, schema validation, and appropriate credential management.
+## Web backends and integrations
 
-**Database applications:** example 10 uses parameterized SQL to keep query data separate from query syntax. It creates an in-memory database, so its contents disappear when the connection closes. File-backed storage adds durability but also requires migration and backup decisions.
+Python can run the server-side part of a web application: handling a request, looking up records, applying business rules, and returning a response. Frameworks such as [Django](https://docs.djangoproject.com/), [Flask](https://flask.palletsprojects.com/), and [FastAPI](https://fastapi.tiangolo.com/) provide tools for that work.
 
-**Concurrent tasks:** example 13 simulates I/O with asynchronous waits. Concurrency lets other work proceed during a wait; it does not inherently make CPU-heavy Python calculations faster. Blocking work inside an async function can stall the event loop.
+JSON commonly carries data between services. [Example 08](../examples/08_json_api_payload.py) decodes a sample response and extracts completed tasks. A real client would also need to handle connection failures, timeouts, unexpected response formats, and authentication where required.
 
-**Predictive modeling:** example 15 fits a line to four synthetic points. A perfect fit on invented data is not evidence that a model generalizes. Real modeling requires suitable measurements, held-out evaluation, error analysis, and a justified use case.
+The example stops at processing the payload so it can run without a service or credentials.
 
-## When another tool may be a better fit
+## Databases
 
-- Browser interfaces typically use JavaScript or TypeScript.
-- Hard real-time systems and low-level memory control often call for systems languages.
-- CPU-intensive loops may benefit from compiled extensions, vectorized libraries, or another runtime.
-- Mobile applications usually need platform-specific tools or an additional framework.
+[Example 10](../examples/10_sqlite_database.py) creates a table and asks for courses with scores above a threshold. The threshold is passed separately from the SQL statement using a `?` placeholder. The same pattern matters when the value comes from a user.
 
-Python can still coordinate components implemented in other languages.
+The database lives in memory and disappears when the connection closes. Changing the connection path to a filename introduces persistence, but also decisions about where the file belongs, how its schema changes, and how to back it up.
 
-## Explore the ecosystem
+One detail worth noticing: the SQLite connection's `with` block handles the transaction. It does not close the connection, so the example closes it in `finally`.
 
-- [Python application overview](https://www.python.org/about/apps/)
-- [Django documentation](https://docs.djangoproject.com/)
-- [Flask documentation](https://flask.palletsprojects.com/)
-- [FastAPI documentation](https://fastapi.tiangolo.com/)
-- [pandas documentation](https://pandas.pydata.org/docs/)
-- [NumPy documentation](https://numpy.org/doc/)
-- [Matplotlib documentation](https://matplotlib.org/stable/)
-- [scikit-learn user guide](https://scikit-learn.org/stable/user_guide.html)
-- [PyTorch documentation](https://docs.pytorch.org/docs/stable/index.html)
-- [SciPy documentation](https://docs.scipy.org/doc/scipy/)
-- [pytest documentation](https://docs.pytest.org/)
-- [tkinter documentation](https://docs.python.org/3/library/tkinter.html)
-- [Qt for Python documentation](https://doc.qt.io/qtforpython-6/)
-- [Jupyter documentation](https://docs.jupyter.org/)
+## Analysis and modeling
+
+The standard library is enough for the small calculations in [example 11](../examples/11_statistics_summary.py). It uses sample standard deviation, which requires at least two observations. Mean and median are both included because they respond differently to unusually large or small values.
+
+Larger analysis work often uses [pandas](https://pandas.pydata.org/docs/) for tables, [NumPy](https://numpy.org/doc/) for arrays, and [Matplotlib](https://matplotlib.org/stable/) for plots. Scientific computing also uses [SciPy](https://docs.scipy.org/doc/scipy/).
+
+[Example 15](../examples/15_linear_regression.py) fits a straight line to four synthetic observations. It is an introduction to fitting and prediction. Real modeling requires a reason to trust the measurements and an evaluation on data that was not used to fit the model. Libraries such as [scikit-learn](https://scikit-learn.org/stable/user_guide.html) support more extensive workflows.
+
+## Developer tools and concurrent work
+
+Small command-line programs are often a useful starting point for automation. [Example 12](../examples/12_command_line_tool.py) uses `argparse`, which handles options and generates `--help` output. Tests can then exercise the tool by running the same command a user would run.
+
+Some programs spend most of their time waiting for I/O. [Example 13](../examples/13_async_tasks.py) demonstrates how `asyncio` lets tasks make progress during those waits. Its delays are simulated. The results from `gather` remain in input order even when the tasks finish in another order.
+
+Async code does not automatically speed up calculations. Blocking work inside an async function can hold up the event loop.
+
+## Other uses and limits
+
+Python is also used in teaching, scientific experiments, desktop applications, and testing. The [official application overview](https://www.python.org/about/apps/) provides a broader survey.
+
+For browser interfaces, JavaScript or TypeScript is usually the direct choice. Low-level systems and hard real-time requirements often call for a systems language. Python can coordinate code written in other languages, so a project does not always need to choose just one.
