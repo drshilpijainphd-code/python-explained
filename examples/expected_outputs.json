@@ -1,0 +1,17 @@
+{
+  "01_hello_python.py": "Hello, Python!\nLearning goal: build useful programs\n",
+  "02_temperature_converter.py": "25.0 C = 77.0 F\n",
+  "03_grade_classifier.py": "Score 86: B\n",
+  "04_collection_processing.py": "Even squares: [4, 16, 36]\n",
+  "05_word_frequency.py": "python: 3\nmakes: 2\nautomation: 1\n",
+  "06_file_report.py": "Tasks completed: 3\n",
+  "07_csv_sales_summary.py": "Notebook: 25.00\nPen: 15.00\nTotal sales: 40.00\n",
+  "08_json_api_payload.py": "Completed: Read the Python guide\n",
+  "09_dataclass_inventory.py": "Keyboard inventory value: 149.97\n",
+  "10_sqlite_database.py": "Python fundamentals: 90\n",
+  "11_statistics_summary.py": "Mean: 6.00\nMedian: 6.00\nSample standard deviation: 3.16\n",
+  "12_command_line_tool.py": "Hello, Developer!\n",
+  "13_async_tasks.py": "report: ready\nsummary: ready\n",
+  "14_html_parsing.py": "Python -> https://www.python.org/\n",
+  "15_linear_regression.py": "Slope: 10.00\nIntercept: 40.00\nPrediction for 5 study hours: 90.00\n"
+}
