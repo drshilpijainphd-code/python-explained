@@ -1,12 +1,12 @@
-# The 15-example guide
+# Example notes
 
 [Back to the repository](../README.md)
 
-Each example is a complete program. Run commands from the repository root using Python 3.11 or newer. All sample inputs are included in the code. All examples run offline and require no third-party packages.
+Run these files from the repository root with Python 3.11 or newer. Each program includes its sample input and uses only the standard library. The notes explain a few details that are easy to miss when reading the code.
 
 ## 01. Variables and formatted output
 
-Introduce values, strings, and readable output.
+`language` and `goal` are ordinary strings. The `f` before each output string lets Python insert the variable values inside braces. There is no special setup behind this example.
 
 **Source:** [01_hello_python.py](../examples/01_hello_python.py)
 
@@ -40,7 +40,7 @@ Learning goal: build useful programs
 
 ## 02. Functions and arithmetic
 
-Convert a temperature with a reusable, typed function.
+The function returns a value instead of printing it. That makes it possible to use the same conversion from a script, a test, or a user interface. Zero Celsius and -40 are useful reference points when checking the formula.
 
 **Source:** [02_temperature_converter.py](../examples/02_temperature_converter.py)
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
 ## 03. Conditions and validation
 
-Use branches to classify a score and reject invalid input.
+The thresholds are checked from highest to lowest, and the first match is returned. Input validation comes first. The explicit Boolean check matters because `bool` is a subclass of `int` in Python; without it, `True` could be accepted as a score.
 
 **Source:** [03_grade_classifier.py](../examples/03_grade_classifier.py)
 
@@ -116,7 +116,7 @@ Score 86: B
 
 ## 04. Lists and comprehensions
 
-Filter measurements and transform the selected values.
+The comprehension reads as: square each number, but include it only when the remainder after division by two is zero. It creates a new list and leaves the original input alone.
 
 **Source:** [04_collection_processing.py](../examples/04_collection_processing.py)
 
@@ -150,7 +150,7 @@ Even squares: [4, 16, 36]
 
 ## 05. Text analysis
 
-Normalize text and count words for a simple content report.
+`Counter` stores the number of occurrences of each word. Lowercasing makes `Python` and `PYTHON` count together. The regular expression only recognizes ASCII letters, so punctuation and non-ASCII text need different rules if you extend it.
 
 **Source:** [05_word_frequency.py](../examples/05_word_frequency.py)
 
@@ -192,7 +192,7 @@ automation: 1
 
 ## 06. File automation
 
-Write and read a UTF-8 report using a temporary directory.
+`Path.write_text` writes the report with an explicit encoding. `TemporaryDirectory` removes the sample directory when the block ends, so running the example repeatedly does not leave report files behind.
 
 **Source:** [06_file_report.py](../examples/06_file_report.py)
 
@@ -232,7 +232,7 @@ Tasks completed: 3
 
 ## 07. CSV and business reporting
 
-Read tabular records and calculate exact decimal totals.
+`DictReader` returns strings, including the numeric fields. Quantity is converted to `int`, while the price is passed directly to `Decimal` as a string. The dictionary accumulates amounts by product, including repeated product rows.
 
 **Source:** [07_csv_sales_summary.py](../examples/07_csv_sales_summary.py)
 
@@ -282,7 +282,7 @@ Total sales: 40.00
 
 ## 08. JSON and API data
 
-Decode a local API-style payload and select completed tasks.
+The payload is a string containing JSON, not a live API response. `json.loads` turns it into Python dictionaries and lists; JSON `true` and `false` become Python `True` and `False`. The code assumes every task has a title and a done flag.
 
 **Source:** [08_json_api_payload.py](../examples/08_json_api_payload.py)
 
@@ -322,7 +322,7 @@ Completed: Read the Python guide
 
 ## 09. Object-oriented programming
 
-Model an inventory item with a dataclass and calculated value.
+The dataclass supplies an initializer for the three fields. `frozen=True` prevents normal reassignment of those fields, and the property calculates the total rather than storing a second value that could become outdated. Negative values are rejected during initialization.
 
 **Source:** [09_dataclass_inventory.py](../examples/09_dataclass_inventory.py)
 
@@ -371,7 +371,7 @@ Keyboard inventory value: 149.97
 
 ## 10. SQL and persistence
 
-Create a table, insert records, and query results with parameters.
+The query passes the threshold as a separate parameter instead of inserting it into the SQL string. `:memory:` creates a temporary database. The connection is closed explicitly because its transaction context manager does not close it.
 
 **Source:** [10_sqlite_database.py](../examples/10_sqlite_database.py)
 
@@ -421,7 +421,7 @@ Python fundamentals: 90
 
 ## 11. Descriptive statistics
 
-Summarize measurements with mean, median, and sample standard deviation.
+This uses sample standard deviation, so one observation is not enough. A two-item minimum is checked before calling the statistics functions. With the symmetric sample data, mean and median are both six.
 
 **Source:** [11_statistics_summary.py](../examples/11_statistics_summary.py)
 
@@ -464,7 +464,7 @@ Sample standard deviation: 3.16
 
 ## 12. Command-line applications
 
-Accept a name through argparse and provide built-in help.
+`argparse` reads the command-line arguments and provides `--help` automatically. Running the file without options uses `Developer`; passing `--name Alex` replaces that default. Unknown options produce an error.
 
 **Source:** [12_command_line_tool.py](../examples/12_command_line_tool.py)
 
@@ -499,7 +499,7 @@ Hello, Developer!
 
 ## 13. Asynchronous programming
 
-Schedule independent simulated I/O tasks concurrently.
+Both coroutines are scheduled by `gather`. The summary has a shorter wait and can finish first, but `gather` returns results in the original argument order. `asyncio.sleep` is standing in for an I/O wait here.
 
 **Source:** [13_async_tasks.py](../examples/13_async_tasks.py)
 
@@ -543,7 +543,7 @@ summary: ready
 
 ## 14. Structured web content
 
-Extract link labels and destinations from local HTML.
+The parser remembers a link's destination and collects text until the closing anchor tag. Keeping text fragments in a list also handles a label inside a nested tag such as `<strong>`. This example parses a supplied string; it does not download a page.
 
 **Source:** [14_html_parsing.py](../examples/14_html_parsing.py)
 
@@ -602,7 +602,7 @@ Python -> https://www.python.org/
 
 ## 15. Predictive modeling fundamentals
 
-Fit a line to toy data and make a prediction without external libraries.
+The four sample points lie exactly on a straight line: each additional hour adds ten points. The calculation therefore gives a slope of ten and an intercept of forty. These invented values make the arithmetic easy to check, but say nothing about real study outcomes.
 
 **Source:** [15_linear_regression.py](../examples/15_linear_regression.py)
 
