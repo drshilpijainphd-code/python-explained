@@ -1,137 +1,123 @@
 # Python Explained
-### From language fundamentals to practical applications
 
-A structured introduction to **what Python is, where it is used, and how to write useful programs**. Explore 15 small, runnable examples supported by explanations, expected results, and automated checks.
-
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Examples](https://img.shields.io/badge/examples-15-2563EB)](docs/examples.md)
 [![Tests](https://github.com/drshilpijainphd-code/python-explained/actions/workflows/tests.yml/badge.svg)](https://github.com/drshilpijainphd-code/python-explained/actions/workflows/tests.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Start here:** [Quick start](#quick-start) · [Python fundamentals](docs/fundamentals.md) · [Practical uses](docs/applications.md) · [15 examples](docs/examples.md) · [Learning path](docs/learning-path.md)
+Notes on Python and 15 small programs showing what it can do. The examples start with variables and functions, then move into files, data processing, SQL, and command-line tools.
+
+Everything runs with Python 3.11 or newer and the standard library. No package installation, API keys, or network connection is needed after cloning.
 
 ## What is Python?
 
-Python is a high-level, general-purpose programming language. Its readable syntax lets developers express ideas with relatively little code. Python supports procedural, object-oriented, and functional programming styles, and provides a standard library for common tasks.
+Python is a general-purpose programming language used to write scripts and applications. Indentation defines blocks of code, and built-in types such as lists and dictionaries make it convenient to work with collections of data.
 
-Python is dynamically typed: objects have types, while names can be bound to different objects. Type hints make intent clearer but do not automatically enforce types at runtime. Python is often described as interpreted; CPython, its reference implementation, compiles source into bytecode that its interpreter executes. See the [official Python tutorial](https://docs.python.org/3/tutorial/) for the language foundations.
+A small example:
 
-## Why learn it?
+```python
+temperatures = [18, 24, 31, 27]
+warm_days = [temperature for temperature in temperatures if temperature >= 25]
+print(warm_days)  # [31, 27]
+```
 
-- **Readable programs:** indentation defines blocks, making structure visible.
-- **Fast experimentation:** scripts and an interactive interpreter shorten the feedback loop.
-- **Useful built-in tools:** work with files, JSON, CSV, SQL, statistics, and command-line arguments.
-- **A broad ecosystem:** specialized packages extend Python into web development, science, and machine learning.
-- **Transferable concepts:** functions, data structures, error handling, and tests apply across languages.
+The same language can handle a short script like this or a larger application split into modules. Python supports functions, classes, and several programming styles. Its standard library covers tasks such as reading files, parsing JSON, and querying SQLite databases.
 
-Python is a practical choice for many tasks, but performance-sensitive code may need optimized libraries or another language. Python is also not the standard language executed directly by web browsers.
+Python is dynamically typed. Annotations such as `score: int` describe the intended type, but do not check it at runtime. For example, the [grade classifier](examples/03_grade_classifier.py) checks its input explicitly.
 
-## Where is Python used?
+The [fundamentals guide](docs/fundamentals.md) covers types, control flow, functions, and error handling in more detail.
 
-| Area | Typical work | Example in this repository |
-| --- | --- | --- |
-| Automation | Generate reports and process files | [File report](examples/06_file_report.py) |
-| Business reporting | Aggregate spreadsheet exports | [CSV sales summary](examples/07_csv_sales_summary.py) |
-| Web services and integrations | Process structured request and response data | [JSON payload](examples/08_json_api_payload.py) |
-| Database applications | Store and query records | [SQLite database](examples/10_sqlite_database.py) |
-| Data analysis | Summarize observations | [Statistics summary](examples/11_statistics_summary.py) |
-| Developer tools | Build utilities and automate checks | [Command-line tool](examples/12_command_line_tool.py) |
-| Concurrent I/O | Coordinate tasks that spend time waiting | [Async tasks](examples/13_async_tasks.py) |
-| Content processing | Extract information from structured documents | [HTML parsing](examples/14_html_parsing.py) |
-| Machine learning foundations | Fit a model and calculate predictions | [Linear regression](examples/15_linear_regression.py) |
+## What is it used for?
 
-Python also appears in scientific computing, desktop software, education, and business systems. The [Python Software Foundation's application overview](https://www.python.org/about/apps/) provides further context. Read the [application guide](docs/applications.md) for ecosystem examples and tradeoffs.
+Python is useful when a task involves reading data, transforming it, and producing a result. That includes generating reports from CSV files, automating repetitive file operations, building web backends, and writing developer tools.
 
-## Quick start
+It also has a large ecosystem for data analysis, scientific computing, and machine learning. These areas often depend on external packages; the examples here stay small enough to use the standard library.
 
-Install **Python 3.11 or newer** and Git. No third-party Python packages are required.
+A few connections to the code in this repository:
+
+- **Reporting:** the CSV example groups sales by product and calculates totals with `Decimal`.
+- **Web integrations:** the JSON example extracts completed tasks from a sample response. It covers data handling; it does not call a live API.
+- **Database work:** the SQLite example creates a table, inserts records, and queries them with a parameter.
+- **Command-line tools:** the `argparse` example accepts an option and generates its own help text.
+- **Data analysis:** the statistics and regression examples summarize measurements and fit a line to synthetic data.
+
+Python is not the right tool for every job. Browser interfaces normally use JavaScript or TypeScript, and performance-critical calculations may need compiled code or optimized libraries. See [Python in practice](docs/applications.md) for more context.
+
+## Run the examples
 
 ```bash
 git clone https://github.com/drshilpijainphd-code/python-explained.git
 cd python-explained
-python --version
 python examples/01_hello_python.py
 ```
 
-On macOS or Linux, use `python3` if `python` is unavailable. On Windows, `py` is an alternative when the Python launcher is installed. Run commands from the repository root.
+Use `python3` on systems where `python` is unavailable, or `py` if you use the Windows Python launcher. Run the commands below from the repository root.
 
-Expected output:
+Each file can be run on its own. For example:
+
+```bash
+python examples/07_csv_sales_summary.py
+```
 
 ```text
-Hello, Python!
-Learning goal: build useful programs
+Notebook: 25.00
+Pen: 15.00
+Total sales: 40.00
 ```
 
-Run all 15 examples and verify their output:
-
-```bash
-python scripts/run_examples.py
-```
-
-Run the test suite:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-Try a command-line argument:
+The command-line example accepts an argument:
 
 ```bash
 python examples/12_command_line_tool.py --name Alex
+python examples/12_command_line_tool.py --help
 ```
 
-All examples run offline. The file example uses a temporary directory, and the database example uses an in-memory database.
+## Examples
 
-## The 15 examples
+| File | Topic |
+| --- | --- |
+| [01_hello_python.py](examples/01_hello_python.py) | Variables and formatted strings |
+| [02_temperature_converter.py](examples/02_temperature_converter.py) | Functions and arithmetic |
+| [03_grade_classifier.py](examples/03_grade_classifier.py) | Conditions and input validation |
+| [04_collection_processing.py](examples/04_collection_processing.py) | Lists and comprehensions |
+| [05_word_frequency.py](examples/05_word_frequency.py) | Text processing with Counter |
+| [06_file_report.py](examples/06_file_report.py) | Reading and writing files |
+| [07_csv_sales_summary.py](examples/07_csv_sales_summary.py) | CSV records and decimal arithmetic |
+| [08_json_api_payload.py](examples/08_json_api_payload.py) | JSON decoding |
+| [09_dataclass_inventory.py](examples/09_dataclass_inventory.py) | Dataclasses and properties |
+| [10_sqlite_database.py](examples/10_sqlite_database.py) | SQL queries and connection handling |
+| [11_statistics_summary.py](examples/11_statistics_summary.py) | Mean, median, and sample standard deviation |
+| [12_command_line_tool.py](examples/12_command_line_tool.py) | Command-line arguments |
+| [13_async_tasks.py](examples/13_async_tasks.py) | Concurrent I/O with asyncio |
+| [14_html_parsing.py](examples/14_html_parsing.py) | Parsing links from HTML |
+| [15_linear_regression.py](examples/15_linear_regression.py) | Fitting a line and making a prediction |
 
-| # | Example | What you learn |
-| --- | --- | --- |
-| 01 | [Variables and formatted output](examples/01_hello_python.py) | Introduce values, strings, and readable output. |
-| 02 | [Functions and arithmetic](examples/02_temperature_converter.py) | Convert a temperature with a reusable, typed function. |
-| 03 | [Conditions and validation](examples/03_grade_classifier.py) | Use branches to classify a score and reject invalid input. |
-| 04 | [Lists and comprehensions](examples/04_collection_processing.py) | Filter measurements and transform the selected values. |
-| 05 | [Text analysis](examples/05_word_frequency.py) | Normalize text and count words for a simple content report. |
-| 06 | [File automation](examples/06_file_report.py) | Write and read a UTF-8 report using a temporary directory. |
-| 07 | [CSV and business reporting](examples/07_csv_sales_summary.py) | Read tabular records and calculate exact decimal totals. |
-| 08 | [JSON and API data](examples/08_json_api_payload.py) | Decode a local API-style payload and select completed tasks. |
-| 09 | [Object-oriented programming](examples/09_dataclass_inventory.py) | Model an inventory item with a dataclass and calculated value. |
-| 10 | [SQL and persistence](examples/10_sqlite_database.py) | Create a table, insert records, and query results with parameters. |
-| 11 | [Descriptive statistics](examples/11_statistics_summary.py) | Summarize measurements with mean, median, and sample standard deviation. |
-| 12 | [Command-line applications](examples/12_command_line_tool.py) | Accept a name through argparse and provide built-in help. |
-| 13 | [Asynchronous programming](examples/13_async_tasks.py) | Schedule independent simulated I/O tasks concurrently. |
-| 14 | [Structured web content](examples/14_html_parsing.py) | Extract link labels and destinations from local HTML. |
-| 15 | [Predictive modeling fundamentals](examples/15_linear_regression.py) | Fit a line to toy data and make a prediction without external libraries. |
+The [example notes](docs/examples.md) include the code, expected output, implementation details, and suggested changes to try.
 
-The [annotated example guide](docs/examples.md) contains the complete code, commands, expected output, and an exercise for every example.
+## A few design choices
 
-## Repository structure
+The examples run offline so that their output does not depend on a service being available. The file example uses a temporary directory, and SQLite runs in memory; neither leaves sample data behind.
 
-```text
-python-explained/
-├── README.md
-├── docs/
-│   ├── fundamentals.md
-│   ├── applications.md
-│   ├── examples.md
-│   └── learning-path.md
-├── examples/                 # 15 standalone Python programs + output fixtures
-├── scripts/run_examples.py  # Runs every example and checks its output
-├── tests/test_examples.py    # Behavior, boundary, and execution checks
-├── .github/workflows/tests.yml
-├── CONTRIBUTING.md
-└── LICENSE
+Most examples separate a calculation from the code that prints it. This makes the functions usable from tests or another program. Main guards keep importing a module from running its demonstration.
+
+The sample data is deliberately small. CSV and JSON handling assumes the schemas shown in the examples. The regression example fits four invented points; it demonstrates the calculation, not the accuracy of a real prediction system.
+
+## Checks
+
+```bash
+python scripts/run_examples.py
+python -m unittest discover -s tests -v
 ```
 
-## Quality and scope
+The runner compares each program's output with [expected_outputs.json](examples/expected_outputs.json). The tests also cover grade boundaries, repeated CSV products, empty inputs, and other behavior that printed examples alone would miss.
 
-Examples use explicit imports, descriptive names, focused functions, and main guards. Tests check all example outputs and selected edge cases. GitHub Actions runs the checks on Python 3.11–3.14 on Linux, plus Python 3.14 on Windows.
+GitHub Actions runs both commands on Python 3.11–3.14 on Linux and Python 3.14 on Windows.
 
-This is an educational repository. Its small datasets and models demonstrate concepts; they do not represent production services, financial advice, or validated predictions about people. The JSON and CSV examples assume the documented sample schemas.
+## Further reading
 
-## Contributing
+- [Python fundamentals](docs/fundamentals.md)
+- [Python in practice](docs/applications.md)
+- [Suggested exercises](docs/learning-path.md)
+- [Official Python tutorial](https://docs.python.org/3/tutorial/)
+- [Python application overview](https://www.python.org/about/apps/)
 
-Corrections, clearer explanations, and focused improvements are welcome. Follow [CONTRIBUTING.md](CONTRIBUTING.md), include a reproducible example of the change, and run the checks before opening a pull request.
+Corrections and small improvements are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the checks to run.
 
-## License
-
-Released under the [MIT License](LICENSE).
+[MIT license](LICENSE).
