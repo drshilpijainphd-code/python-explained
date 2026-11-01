@@ -2,9 +2,11 @@
 
 [![Tests](https://github.com/drshilpijainphd-code/python-explained/actions/workflows/tests.yml/badge.svg)](https://github.com/drshilpijainphd-code/python-explained/actions/workflows/tests.yml)
 
-Notes on Python and 15 small programs showing what it can do. The examples start with variables and functions, then move into files, data processing, SQL, and command-line tools.
+A practical introduction to Python, with 15 executable examples covering language fundamentals, automation, data processing, databases, and command-line tools.
 
-Everything runs with Python 3.11 or newer and the standard library. No package installation, API keys, or network connection is needed after cloning.
+**Requirements:** Python 3.11 or newer; Git for cloning. All examples use the standard library and run offline.
+
+[Getting started](#getting-started) · [Examples](#examples) · [CMD guide](docs/cmd.md) · [Verification](#verification)
 
 ## What is Python?
 
@@ -40,21 +42,52 @@ A few connections to the code in this repository:
 
 Python is not the right tool for every job. Browser interfaces normally use JavaScript or TypeScript, and performance-critical calculations may need compiled code or optimized libraries. See [Python in practice](docs/applications.md) for more context.
 
-## Run the examples
+## Getting started
 
-```bash
+### Windows: Command Prompt (CMD)
+
+Open **Command Prompt** from the Windows Start menu, or enter `cmd` in File Explorer's address bar while viewing your projects folder. Check the prerequisites, then clone the repository:
+
+```bat
+python --version
+git --version
+
 git clone https://github.com/drshilpijainphd-code/python-explained.git
 cd python-explained
-python examples/01_hello_python.py
+python examples\01_hello_python.py
 ```
 
-Use `python3` on systems where `python` is unavailable, or `py` if you use the Windows Python launcher. Run the commands below from the repository root.
+If your installation uses the Windows Python launcher, replace `python` with `py`. Confirm that the Python version is at least 3.11. If a command fails, resolve the error before continuing.
 
-Each file can be run on its own. For example:
+Already cloned the repository? Open CMD in its folder and run `cd` to display your location, then `dir` to list its contents. You should see `README.md`, `examples`, and `docs`.
+
+### macOS or Linux
 
 ```bash
-python examples/07_csv_sales_summary.py
+python3 --version
+git --version
+git clone https://github.com/drshilpijainphd-code/python-explained.git
+cd python-explained
+python3 examples/01_hello_python.py
 ```
+
+### Navigate and run a program
+
+In CMD, start from the repository root:
+
+```bat
+REM Enter the examples folder and list its Python files.
+cd examples
+dir /b *.py
+
+REM Run the sales report from this folder.
+python 07_csv_sales_summary.py
+
+REM Return to the repository root.
+cd ..
+```
+
+Expected report output:
 
 ```text
 Notebook: 25.00
@@ -62,12 +95,14 @@ Pen: 15.00
 Total sales: 40.00
 ```
 
-The command-line example accepts an argument:
+Run the command-line example from the repository root:
 
-```bash
-python examples/12_command_line_tool.py --name Alex
-python examples/12_command_line_tool.py --help
+```bat
+python examples\12_command_line_tool.py --name "Alex Morgan"
+python examples\12_command_line_tool.py --help
 ```
+
+The [CMD guide](docs/cmd.md) covers `cd /d`, paths containing spaces, virtual environments, tests, and troubleshooting. On macOS or Linux, use `python3` and forward slashes in the example paths.
 
 ## Examples
 
@@ -91,7 +126,7 @@ python examples/12_command_line_tool.py --help
 
 The [example notes](docs/examples.md) include the code, expected output, implementation details, and suggested changes to try.
 
-## A few design choices
+## Implementation notes
 
 The examples run offline so that their output does not depend on a service being available. The file example uses a temporary directory, and SQLite runs in memory; neither leaves sample data behind.
 
@@ -99,7 +134,7 @@ Most examples separate a calculation from the code that prints it. This makes th
 
 The sample data is deliberately small. CSV and JSON handling assumes the schemas shown in the examples. The regression example fits four invented points; it demonstrates the calculation, not the accuracy of a real prediction system.
 
-## Checks
+## Verification
 
 ```bash
 python scripts/run_examples.py
@@ -112,6 +147,7 @@ GitHub Actions runs both commands on Python 3.11–3.14 on Linux and Python 3.14
 
 ## Further reading
 
+- [Windows CMD commands and setup](docs/cmd.md)
 - [Python fundamentals](docs/fundamentals.md)
 - [Python in practice](docs/applications.md)
 - [Suggested exercises](docs/learning-path.md)
