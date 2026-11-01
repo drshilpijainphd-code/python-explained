@@ -6,6 +6,75 @@ Use these commands in **Command Prompt**, also called CMD. Open it from the Star
 
 Each section states its starting folder. Copy the commands without adding a prompt such as `C:\>`.
 
+## Install the latest stable Python from CMD
+
+On Windows 10 or 11, use WinGet to install the official **Python install manager**. This installs Python for your Windows account; it is not an all-users deployment.
+
+Check WinGet, then install the manager:
+
+```bat
+winget --version
+winget install --id 9NQ7512CXL7T --exact --source msstore
+```
+
+Review any prompts shown by WinGet. After installation, **close CMD and open a new CMD window**, then run:
+
+```bat
+pymanager install --update default
+pymanager list
+pymanager exec --version
+python --version
+```
+
+With the manager's standard configuration, `default` selects the latest stable Python release. A customized default can select another version. This avoids hard-coding a release number that becomes outdated. `pymanager` also avoids conflicts with an older `py` launcher.
+
+The first command installs the selected runtime or updates it if a newer release is available. `pymanager exec --version` verifies the managed interpreter. Compare it with `python --version` to check what your usual command runs.
+
+These commands follow the [official Python install-manager instructions](https://www.python.org/downloads/release/pymanager-261/) and [Python's Windows documentation](https://docs.python.org/3/using/windows.html).
+
+### Update later
+
+Update the manager, reopen CMD, then update the selected Python runtime:
+
+```bat
+winget upgrade --id 9NQ7512CXL7T --exact --source msstore
+```
+
+In the new CMD window:
+
+```bat
+pymanager install --update default
+pymanager exec --version
+```
+
+Existing virtual environments keep their own interpreter. Create a new environment when switching a project to a different Python version.
+
+### If installation is unavailable
+
+If `winget` is missing, install or update Microsoft's **App Installer**, then reopen CMD. Microsoft's [WinGet setup guide](https://learn.microsoft.com/en-us/windows/package-manager/winget/) links to it.
+
+If Microsoft Store access is restricted, open the official download page from CMD and install the Python install manager available there:
+
+```bat
+start "" "https://www.python.org/downloads/windows/"
+```
+
+If `python --version` still shows an older installation, inspect command resolution:
+
+```bat
+where python
+where pymanager
+pymanager list
+```
+
+You can run this project's examples explicitly with the managed interpreter:
+
+```bat
+pymanager exec examples\01_hello_python.py
+```
+
+Run that last command from the repository root. It does not require removing an existing Python installation.
+
 ## Check the prerequisites
 
 ```bat
