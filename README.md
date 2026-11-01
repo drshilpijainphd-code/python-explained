@@ -6,7 +6,7 @@ A practical introduction to Python, with 15 executable examples covering languag
 
 **Requirements:** Python 3.11 or newer; Git for cloning. All examples use the standard library and run offline.
 
-[Getting started](#getting-started) · [Examples](#examples) · [CMD guide](docs/cmd.md) · [Verification](#verification)
+[Getting started](#getting-started) · [Examples](#examples) · [CMD guide](docs/cmd.md) · [PowerShell and terminal guide](docs/shells.md) · [Verification](#verification)
 
 ## What is Python?
 
@@ -78,7 +78,23 @@ If your installation uses the Windows Python launcher, replace `python` with `py
 
 Already cloned the repository? Open CMD in its folder and run `cd` to display your location, then `dir` to list its contents. You should see `README.md`, `examples`, and `docs`.
 
+### Windows: PowerShell
+
+In Windows Terminal, select the **PowerShell** profile. The Python install-manager commands above also work in PowerShell. After installing Python and Git, run:
+
+```powershell
+git clone https://github.com/drshilpijainphd-code/python-explained.git
+Set-Location python-explained
+Get-Location
+Get-ChildItem
+python .\examples\01_hello_python.py
+```
+
+For an existing checkout, enter its folder instead of cloning again. The [PowerShell guide](docs/shells.md#windows-powershell) includes installation, updates, paths containing spaces, virtual environments, and commands compatible with Windows PowerShell 5.1 and PowerShell 7.
+
 ### macOS or Linux
+
+Use Bash or Zsh in your terminal. The [terminal setup guide](docs/shells.md#macos-and-linux-terminals) covers Homebrew on macOS and APT on Ubuntu/Debian. Once Python 3.11 or newer and Git are available:
 
 ```bash
 python3 --version
@@ -119,7 +135,7 @@ python examples\12_command_line_tool.py --name "Alex Morgan"
 python examples\12_command_line_tool.py --help
 ```
 
-The [CMD guide](docs/cmd.md) covers `cd /d`, paths containing spaces, virtual environments, tests, and troubleshooting. On macOS or Linux, use `python3` and forward slashes in the example paths.
+The [CMD guide](docs/cmd.md) covers `cd /d`, paths containing spaces, virtual environments, tests, and troubleshooting. See the [PowerShell and terminal guide](docs/shells.md) for equivalent commands in other shells.
 
 ## Examples
 
@@ -165,6 +181,7 @@ GitHub Actions runs both commands on Python 3.11–3.14 on Linux and Python 3.14
 ## Further reading
 
 - [Windows CMD commands and setup](docs/cmd.md)
+- [PowerShell and macOS/Linux terminal commands](docs/shells.md)
 - [Python fundamentals](docs/fundamentals.md)
 - [Python in practice](docs/applications.md)
 - [Suggested exercises](docs/learning-path.md)
