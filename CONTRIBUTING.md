@@ -1,30 +1,28 @@
 # Contributing
 
-Thank you for helping improve Python Explained.
+Bug fixes and corrections to the explanations are welcome. For a bug report, include the file, the command you ran, your Python version, and what you expected to happen.
 
-## Propose a focused change
+Keep a pull request focused on one change. If an example becomes difficult to explain in a few paragraphs, it may be better suited to a separate project.
 
-Open an issue for a bug, unclear explanation, or suggested improvement. Include the affected file, the command you ran, your Python version, and the expected and actual behavior. Do not include credentials or private data.
+## Working on an example
 
-For a contribution, fork the repository, create a descriptive branch, and keep the pull request focused on one topic.
+Use Python 3.11-compatible syntax and the standard library. Examples should run offline with the sample inputs already included. Keep calculations separate from printing where that makes the code easier to test.
 
-## Style and scope
+When changing an example, check these files as well:
 
-- Support Python 3.11 and newer.
-- Keep the core examples standard-library-only and runnable offline.
-- Use four-space indentation, descriptive names, and explicit imports.
-- Add a main guard to executable examples.
-- Explain assumptions and use small, understandable sample inputs.
-- Keep the annotated guide and expected-output fixtures consistent with the code.
-- Avoid claims of production readiness for teaching demonstrations.
+- `docs/examples.md` contains a copy of the source and its expected output.
+- `examples/expected_outputs.json` supplies the output used by the runner.
+- `tests/test_examples.py` checks behavior beyond the demonstration input.
 
-## Verify your change
+Update the relevant documentation and fixtures if the behavior changes. Avoid changing an expected result just to make a failing test pass; first check why the result differs.
 
-From the repository root:
+## Before opening a pull request
+
+Run these commands from the repository root:
 
 ```bash
 python scripts/run_examples.py
 python -m unittest discover -s tests -v
 ```
 
-Update tests when behavior changes. In the pull request, describe the problem, the resulting behavior, and the checks you ran.
+Describe what changed and which checks you ran. For a documentation-only correction, checking the example names, commands, and links is usually enough.
