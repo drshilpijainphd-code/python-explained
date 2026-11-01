@@ -48,7 +48,7 @@ The standard library ships with Python. This repository uses only those modules.
 python -m venv .venv
 ```
 
-Activate it with `.venv\Scripts\activate.bat` in Windows Command Prompt or `source .venv/bin/activate` in macOS/Linux shells. Activation is optional: you can invoke the environment's Python executable directly. There are no packages to install for this repository.
+In Windows Command Prompt, use `call .venv\Scripts\activate.bat`; macOS/Linux shells use `source .venv/bin/activate`. Activation is optional: you can invoke the environment's Python executable directly. There are no packages to install for this repository. The [CMD guide](cmd.md) includes the complete setup and test commands.
 
 ## Habits that improve maintainability
 
